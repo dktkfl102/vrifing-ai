@@ -74,7 +74,7 @@ app.get("/fetch-data", async (req, res) => {
     If some information cannot be found, leave other fields empty. However, always provide estimated latitude and longitude values based on the address.
     If no information is found at all, simply respond with { "error": "Information not available" }.`;
 
-    const userPrompt = `region name: ${region}, store name: ${store} 딱 obj만 내려줘 앞뒤 설명 넣지 말고`;
+    const userPrompt = `region name: ${region}, store name: ${store}. 딱 obj만 내려줘 앞뒤 설명 넣지 말고. look for the newest articles`;
 
     const params = {
       system_prompt: systemPrompt,
