@@ -135,7 +135,7 @@ Provide the results in the following JSON format: {
         } 
     ], 
     "store_hours": "Operating Hours", 
-    "is_closed": true/false, 
+    "is_closed": true/false(means closed down), 
     "menu": [ 
         { 
             "name": "Menu Item", 
