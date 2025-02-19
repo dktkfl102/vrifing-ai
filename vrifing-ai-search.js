@@ -144,8 +144,13 @@ Provide the results in the following JSON format: {
         } 
     ] 
 } 
-For store_hours, display Monday to Sunday (월, 화, 수, 목, 금, 토, 일), including break time if applicable.
+For store_hours, 
+1. display Monday to Sunday (월, 화, 수, 목, 금, 토, 일), including break time if applicable.
+2. If the specified day is a holiday, display "휴무"
+3. 24시간 영업인 경우 00:00-24:00으로 표기해줘
 For latitude and longitude, infer the values based on the provided address. 
+For menu, The more menu information, the better, but display only up to 10 items.
+For the price in menu, add a comma every thousand and append the character "원" at the end.
 If some information cannot be found, leave other fields empty. However, always provide estimated latitude and longitude values based on the address.
 If no information is found at all, simply respond with { "error": "Information not available" }.`;
 
