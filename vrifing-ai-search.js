@@ -109,8 +109,8 @@ const hasKorean = (store, region) => {
 };
 
 const systemPrompt = `
-If the information is incomplete or unavailable on Naver, then search on Google as a secondary option. 
-Provide the results in the following JSON format: { 
+1. Look for the newest articles.
+2. 검색된 정보는 다음 JSON 형식으로 제공하세요:  { 
     "store_name": "Store Name", 
     "store_image": "Store Image URL", 
     "address_jibun": "Lot Number Address", 
@@ -144,18 +144,30 @@ Provide the results in the following JSON format: {
         } 
     ] 
 } 
-For store_hours, 
-1. display Monday to Sunday (월, 화, 수, 목, 금, 토, 일), including break time if applicable.
-2. If the specified day is a holiday, display "휴무"
-3. 24시간 영업인 경우 00:00-24:00으로 표기해줘
-For latitude and longitude, infer the values based on the provided address. 
-For menu, The more menu information, the better, but display only up to 10 items.
-For the price in menu, add a comma every thousand and append the character "원" at the end.
-If some information cannot be found, leave other fields empty. However, always provide estimated latitude and longitude values based on the address.
-If no information is found at all, simply respond with { "error": "Information not available" }.`;
+
+### 📌 'store_hours' 규칙
+1. 월, 화, 수, 목, 금, 토, 일 순서대로 각 요일별로 제공하며(같은 시간이라도 한번에 표기 X), 브레이크 타임 포함.  
+2. 특정 요일이 휴무일이면 "휴무"로 표시.  
+3. 24시간 영업이면 "00:00-24:00"으로 표기.  
+4. 각 요일 구분은 쉼표(,)로 표기.  
+5. 브레이크타임/라스트오더 가 있는 경우 앞에서 세칸 띄어쓰기해서 표기.
+
+### 📌 'latitude', 'longitude'
+- 정보가 없다면, 주소 정보를 기반으로 추정하여 반드시 제공하세요.
+
+### 📌 'menu.price'
+- 가격은 1,000 단위마다 콤마를 추가하고 "원"을 붙이세요.
+
+### 📌 정보 부족 시 처리 방법
+- 정보가 없을 경우 해당 필드는 비워둡니다.  
+- 주소 기반 'latitude'와 'longitude' 값은 반드시 제공하세요.  
+- 검색된 정보가 전혀 없으면 '{ "error": "Information not available" }'를 반환하세요.
+ `;
 
 const userPrompt = (store, region) =>
-  `region name: ${region}, store name: ${store}. Look for the latest articles.`;
+  `region name: ${region}, store name: ${store}. Look for the newest articles.
+결과 마지막에 검색한 웹사이트의 https를 포함한 출처(도메인)를 반드시 포함하세요.  
+   - 출처가 없으면 응답이 불완전한 것으로 간주됩니다.`;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
