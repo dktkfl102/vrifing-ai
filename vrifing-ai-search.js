@@ -155,7 +155,7 @@ If some information cannot be found, leave other fields empty. However, always p
 If no information is found at all, simply respond with { "error": "Information not available" }.`;
 
 const userPrompt = (store, region) =>
-  `region name: ${region}, store name: ${store}. Look for the latest naver blog(this domain starts with 'https://blog.naver.com').`;
+  `region name: ${region}, store name: ${store}. Look for the latest articles.`;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
