@@ -48,6 +48,8 @@ app.get("/fetch-data", async (req, res) => {
         result = JSON.parse(result);
         if (!result.error) {
           result.store_id = generateUniqueId();
+          result.address_jibun = convertRegionName(result.address_jibun);
+          result.address_road = convertRegionName(result.address_road);
         }
         res.json(result);
       } catch (err) {
@@ -171,7 +173,42 @@ const systemPrompt = `
  `;
 
 const userPrompt = (store, region) =>
-  `region name: ${region}, store name: ${store}. Look for the newest articles.`;
+  `region name: ${region}, store name: ${store}. Look for the newest articles. 생성된 obj안에 주석을 달지마세요.`;
+
+function convertRegionName(address) {
+  const regionMap = {
+    서울특별시: "서울",
+    서울시: "서울",
+    부산광역시: "부산",
+    부산시: "부산",
+    대구광역시: "대구",
+    대구시: "대구",
+    인천광역시: "인천",
+    인천시: "인천",
+    광주광역시: "광주",
+    광주시: "광주",
+    대전광역시: "대전",
+    대전시: "대전",
+    울산광역시: "울산",
+    울산시: "울산",
+    세종특별자치시: "세종",
+    세종시: "세종",
+    경기도: "경기",
+    강원도: "강원",
+    충청북도: "충북",
+    충청남도: "충남",
+    전라북도: "전북",
+    전라남도: "전남",
+    경상북도: "경북",
+    경상남도: "경남",
+    제주특별자치도: "제주",
+    제주시: "제주",
+  };
+
+  const region = address.split(" ")[0];
+
+  return address.replace(region, regionMap[region] || region);
+}
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
