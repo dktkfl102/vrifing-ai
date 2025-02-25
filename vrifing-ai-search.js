@@ -18,7 +18,7 @@ function generateUniqueId() {
     letters[Math.floor(Math.random() * 26)] +
     letters[Math.floor(Math.random() * 26)];
   const randomNumbers = Math.floor(
-    1000000 + Math.random() * 9000000
+    1000000000 + Math.random() * 9000000000
   ).toString();
   return randomLetters + randomNumbers;
 }
